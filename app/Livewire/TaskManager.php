@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Task;
+use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -74,5 +75,24 @@ class TaskManager extends Component
             return $query->where("title", "like", "%{$this->search}%");
         })->latest()->paginate(5)->withQueryString();
         return view('livewire.task-manager', compact('tasks'));
+    }
+    public function mount()
+    {
+        if (!auth()->check()) {
+            return redirect()->to('/login');
+        }
+    }
+    public function fetchData()
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . session('token'),
+            'Accept' => 'application/json',
+        ])->get(config('app.url') . '/api/user');
+
+        if ($response->successful()) {
+            $this->user = $response->json();
+        } else {
+            session()->flash('error', 'Failed to fetch user data');
+        }
     }
 }
