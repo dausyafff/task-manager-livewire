@@ -1,4 +1,5 @@
 <div>
+    <h1>Halaman Login</h1>
     <form wire:submit.prevent="login">
         <input type="email" wire:model="email" placeholder="Email">
         @error('email')
@@ -10,4 +11,5 @@
         @enderror
         <button type="submit">Login</button>
     </form>
+    <a href="/register">Belum Punya Akun ???</a>
 </div>
