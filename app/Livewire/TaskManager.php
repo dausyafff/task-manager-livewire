@@ -13,6 +13,7 @@ class TaskManager extends Component
     protected $listeners = ["deleteTask", "toggleTask"];
     protected $paginationTheme = 'bootstrap';
     public $title = "", $search = "", $editingTaskId = null, $editingTaskTitle = "";
+
     public function saveTask()
     {
         $this->validate([
@@ -20,7 +21,8 @@ class TaskManager extends Component
         ]);
         Task::create([
             'title' => $this->title,
-            "completed" => false
+            'completed' => false,
+            'user_id' => auth()->id(), // Kaitkan dengan user yang login
         ]);
 
         $this->title = "";
@@ -71,17 +73,21 @@ class TaskManager extends Component
 
     public function render()
     {
-        $tasks = Task::when($this->search, function ($query) {
-            return $query->where("title", "like", "%{$this->search}%");
-        })->latest()->paginate(5)->withQueryString();
+        $tasks = Task::where('user_id', auth()->id()) // Hanya task milik user yang login
+            ->when($this->search, function ($query) {
+                return $query->where("title", "like", "%{$this->search}%");
+            })->latest()->paginate(5)->withQueryString();
         return view('livewire.task-manager', compact('tasks'));
     }
+
     public function mount()
     {
         if (!auth()->check()) {
             return redirect()->to('/login');
         }
+        $this->fetchData(); // Panggil fetchData saat komponen dimuat
     }
+
     public function fetchData()
     {
         $response = Http::withHeaders([

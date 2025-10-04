@@ -18,7 +18,8 @@ class LoginComponent extends Component
 
         if ($response->successful()) {
             session(['token' => $response['token']]);
-            return redirect()->route('dashboard');
+            session()->flash('message', 'Login successful!');
+            return redirect()->route('task-manager');
         } else {
             session()->flash('error', 'Invalid credentials');
         }
@@ -26,7 +27,6 @@ class LoginComponent extends Component
 
     public function render()
     {
-        return view('livewire.login-component')
-            ->layout('layouts.app');
+        return view('livewire.login-component');
     }
 }

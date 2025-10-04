@@ -8,10 +8,6 @@ use Livewire\Component;
 class RegisterComponent extends Component
 {
     public $name, $email, $password, $password_confirmation;
-    public function render()
-    {
-        return view('livewire.register-component');
-    }
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -36,5 +32,9 @@ class RegisterComponent extends Component
         } else {
             session()->flash('error', 'Registration failed. Please try again.');
         }
+    }
+    public function render()
+    {
+        return view('livewire.register-component');
     }
 }

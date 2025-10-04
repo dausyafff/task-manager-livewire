@@ -9,7 +9,7 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 class Task extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'completed'];
+    protected $fillable = ['title', 'completed', "user_id"];
 
     public function user()
     {
