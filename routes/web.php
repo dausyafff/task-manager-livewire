@@ -12,4 +12,4 @@ Route::get('/', function () {
 });
 Route::get("/login", LoginComponent::class)->name("login");
 Route::get('/register', RegisterComponent::class)->name('register');
-Route::get("/task-manager", TaskManager::class)->name("task-manager")->middleware('auth');
+Route::get("/task-manager", TaskManager::class)->name("task-manager");

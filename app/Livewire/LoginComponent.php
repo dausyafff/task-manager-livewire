@@ -11,10 +11,12 @@ class LoginComponent extends Component
 
     public function login()
     {
-        $response = Http::post(config('app.url') . '/api/login', [
+        $response = Http::post(url('/api/login'), [
             'email' => $this->email,
             'password' => $this->password,
         ]);
+
+        dd($response->json());
 
         if ($response->successful()) {
             session(['token' => $response['token']]);

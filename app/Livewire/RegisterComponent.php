@@ -19,13 +19,14 @@ class RegisterComponent extends Component
     {
         $this->validate();
 
-        $response = Http::post(config('app.url') . '/api/register', [
+        $response = Http::post(url('/api/register'), [
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password,
             'password_confirmation' => $this->password_confirmation,
         ]);
 
+        dd($response->body());
         if ($response->successful()) {
             session()->flash('message', 'Registration successful! Please log in.');
             return redirect()->route('login');

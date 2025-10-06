@@ -40,7 +40,7 @@
                     <span class="error">{{ $message }}</span>
                 @enderror
             </div>
-            <button type="submit">Register</button>
+            <button type="submit" wire:click="register">Register</button>
             <p>Already have an account? <a href="/login">Login</a></p>
         </form>
     </div>
