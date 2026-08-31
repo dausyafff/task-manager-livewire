@@ -2,29 +2,34 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class LoginComponent extends Component
 {
-    public $email, $password;
+    public $email;
+    public $password;
 
     public function login()
     {
-        $response = Http::post(url('/api/login'), [
-            'email' => $this->email,
-            'password' => $this->password,
+        $this->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        dd($response->json());
+        if (Auth::attempt([
+            'email' => $this->email,
+            'password' => $this->password,
+        ])) {
 
-        if ($response->successful()) {
-            session(['token' => $response['token']]);
-            session()->flash('message', 'Login successful!');
+            session()->regenerate();
+
+            session()->flash('success', 'Login successful!');
+
             return redirect()->route('task-manager');
-        } else {
-            session()->flash('error', 'Invalid credentials');
         }
+
+        $this->addError('email', 'Email atau password salah.');
     }
 
     public function render()
