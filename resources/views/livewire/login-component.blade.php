@@ -20,7 +20,7 @@
             @error('password')
                 <span>{{ $message }}</span>
             @enderror
-            <button type="submit" wire:click="login">Login</button>
+            <button type="submit">Login</button>
         </form>
         <a href="/register">Belum Punya Akun ???</a>
     </div>
