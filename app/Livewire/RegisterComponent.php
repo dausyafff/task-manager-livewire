@@ -8,14 +8,14 @@ use Livewire\Component;
 
 class RegisterComponent extends Component
 {
-    public $name;
-    public $email;
-    public $password;
-    public $password_confirmation;
+    public $name = '';
+    public $email = '';
+    public $password = '';
+    public $password_confirmation = '';
 
     protected $rules = [
         'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
+        'email' => 'required|string|email|max:255|unique:users,email',
         'password' => 'required|string|min:8|confirmed',
     ];
 

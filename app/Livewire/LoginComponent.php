@@ -7,8 +7,8 @@ use Livewire\Component;
 
 class LoginComponent extends Component
 {
-    public $email;
-    public $password;
+    public $email = '';
+    public $password = '';
 
     public function login()
     {
@@ -17,19 +17,19 @@ class LoginComponent extends Component
             'password' => 'required',
         ]);
 
-        if (Auth::attempt([
+        if (!Auth::attempt([
             'email' => $this->email,
             'password' => $this->password,
         ])) {
-
-            session()->regenerate();
-
-            session()->flash('success', 'Login successful!');
-
-            return redirect()->route('task-manager');
+            $this->addError('email', 'Email atau password salah.');
+            return;
         }
 
-        $this->addError('email', 'Email atau password salah.');
+        session()->regenerate();
+
+        session()->flash('success', 'Login berhasil!');
+
+        return redirect()->route('task-manager');
     }
 
     public function render()
