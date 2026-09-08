@@ -21,20 +21,21 @@ class RegisterComponent extends Component
 
     public function register()
     {
-        $this->validate();
+        dd("Halooo");
+        // $this->validate();
 
-        User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password),
-        ]);
+        // User::create([
+        //     'name' => $this->name,
+        //     'email' => $this->email,
+        //     'password' => Hash::make($this->password),
+        // ]);
 
-        session()->flash(
-            'success',
-            'Registrasi berhasil! Silakan login.'
-        );
+        // session()->flash(
+        //     'success',
+        //     'Registrasi berhasil! Silakan login.'
+        // );
 
-        return redirect()->route('login');
+        // return redirect()->route('login');
     }
 
     public function render()
